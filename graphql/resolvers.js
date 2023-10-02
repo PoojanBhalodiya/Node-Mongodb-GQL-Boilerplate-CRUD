@@ -21,18 +21,23 @@ module.exports = {
 
       const res = await createdRecipe.save(); //mongoDB save
 
-      return{
+      return {
         id: res.id,
-        ...res._doc
-      }
+        ...res._doc,
+      };
     },
-    async deleteRecipe(_,{ID}){
-      const wasDeleted =  (await Recipe.deleteOne({_id:ID})).deletedCount
-    return wasDeleted; //1 if something was deleted, 0 if nohing was deleted
+    async deleteRecipe(_, { ID }) {
+      const wasDeleted = (await Recipe.deleteOne({ _id: ID })).deletedCount;
+      return wasDeleted; //1 if something was deleted, 0 if nohing was deleted
     },
-    async editRecipe(_,{ID,recipeInput:{name,description}}){
-        const wasEdited = (await Recipe.updateOne({_id: ID},{name: name, description: description})).modifiedCount;
-        return wasEdited; //1 if something was Edited, 0 if nohing was Edited
-    }
+    async editRecipe(_, { ID, recipeInput: { name, description } }) {
+      const wasEdited = (
+        await Recipe.updateOne(
+          { _id: ID },
+          { name: name, description: description }
+        )
+      ).modifiedCount;
+      return wasEdited; //1 if something was Edited, 0 if nohing was Edited
+    },
   },
 };
